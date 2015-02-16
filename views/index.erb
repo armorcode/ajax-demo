@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Ajax</title>
+
+  <script type="text/javascript">
+    window.onload = function(e){
+      console.log("c'est parti")
+
+      document.getElementById('form-post-de-test').onsubmit = function(event) {
+        console.log("dans le submit")
+        event.preventDefault()
+        var oFormElement = document.getElementById('form-post-de-test')
+
+        var r = new XMLHttpRequest();
+        r.open("POST", oFormElement.action, true);
+
+        r.onreadystatechange = function () {
+          if (r.readyState != 4 || r.status != 200) return;
+          document.getElementById('result').innerHTML = "Success: " + r.responseText
+        };
+        //oFormElement.style.display = 'none'
+
+        var s = oFormElement.style;
+        s.opacity = 1;
+        (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,80)})();
+
+        r.send(new FormData(oFormElement));
+      }
+    }
+  </script>
+</head>
+<body id='home'>
+
+  <a href="/coucou?truc=bidule">un simple lien</a>
+
+  <script type="text/javascript">
+  console.log("yaf now")
+  </Script>
+  <form action="/truc" id="form-post-de-test" method="POST">
+    <input type="text" name="maclef"/>
+    <input type="submit" value="submit">
+  </form>
+
+  <p id="result">
+  Bientot ici la répo nse
+  </p>
+
+
+  <form action="/bidule" method="GET">
+    <input type="text" name="maclef"/>
+    <input type="submit" value="submit">
+  </form>
+
+</body>
+</html>
